@@ -12,12 +12,23 @@ permissions:
 jobs:
   plan:
     runs-on: ubuntu-latest
+    env:
+      ARM_USE_OIDC: true
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     steps:
       - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.9.5
       - name: Terraform fmt
+        working-directory: env/dev
         run: terraform fmt -check -recursive
       - name: Init
         working-directory: env/dev
@@ -27,4 +38,4 @@ jobs:
         run: terraform validate
       - name: Plan
         working-directory: env/dev
-        run: terraform plan -input=false
+        run: terraform plan -input=false -var-file="terraform.tfvars"
