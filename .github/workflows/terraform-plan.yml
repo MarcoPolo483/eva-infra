@@ -1,0 +1,30 @@
+﻿name: Terraform Plan (dev)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'env/dev/**'
+      - 'modules/**'
+      - '*.tf'
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive
+      - name: Init
+        working-directory: env/dev
+        run: terraform init -input=false
+      - name: Validate
+        working-directory: env/dev
+        run: terraform validate
+      - name: Plan
+        working-directory: env/dev
+        run: terraform plan -input=false
