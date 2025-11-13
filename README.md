@@ -11,3 +11,4 @@ Baseline Terraform skeleton for EVA 2.0 Azure landing zone.
 - Configure remote state in env/dev/backend.tf (Azure Storage)
 - Add variables to env/dev/terraform.tfvars
 - Run CI plan; validate private endpoints and baseline resources
+
