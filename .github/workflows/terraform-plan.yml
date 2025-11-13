@@ -28,6 +28,7 @@ jobs:
         with:
           terraform_version: 1.9.5
       - name: Terraform fmt
+        working-directory: env/dev
         run: terraform fmt -check -recursive
       - name: Init
         working-directory: env/dev
