@@ -32,3 +32,47 @@ jobs:
 
       - name: Run pre-commit
         run: pre-commit run --all-files --show-diff-on-failure
+
+  iac-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkov (Terraform)
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: .
+          framework: terraform
+          output_format: sarif
+          output_file_path: checkov.sarif
+
+      - name: Upload Checkov SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: checkov.sarif
+
+      - name: Trivy IaC
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          scan-type: config
+          format: sarif
+          output: trivy.sarif
+          severity: HIGH,CRITICAL
+
+      - name: Upload Trivy SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy.sarif
+
+  pr-comment:
+    if: github.event_name == 'pull_request'
+    needs: [guard, iac-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment PR with results
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: |
+            Terraform Guardrails ran successfully. Pre-commit and IaC scans completed.
+            - guard: ${{ needs.guard.result }}
+            - iac-scan: ${{ needs.iac-scan.result }}
