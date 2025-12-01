@@ -16,3 +16,4 @@ Baseline Terraform skeleton for EVA 2.0 Azure landing zone.
 
 CI: guardrails smoke test (trigger) — 2025-12-01
 CI: guardrails smoke test (trigger 2) — 2025-12-01T07:22ZCI: guardrails smoke test (auto) — 20251201-071901
+CI: guardrails smoke test (auto) — 20251201-072052
