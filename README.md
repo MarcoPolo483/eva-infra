@@ -18,3 +18,4 @@ CI: guardrails smoke test (trigger) — 2025-12-01
 CI: guardrails smoke test (trigger 2) — 2025-12-01T07:22ZCI: guardrails smoke test (auto) — 20251201-071901
 CI: guardrails smoke test (auto) — 20251201-072052
 CI: guardrails smoke test (auto) — 20251201-072459
+CI: guardrails smoke test (trigger) — 2025-12-01T07:27:20.0827689-05:00
