@@ -8,3 +8,8 @@
 
 # But DO commit .eva-memory.json
 !.eva-memory.json
+
+# Terraform plan artifacts
+*.tfplan
+plan-*.txt
+
