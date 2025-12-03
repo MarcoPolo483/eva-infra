@@ -35,7 +35,7 @@ variable "consistency_level" {
   validation {
     condition = contains([
       "BoundedStaleness",
-      "Eventual", 
+      "Eventual",
       "Session",
       "Strong",
       "ConsistentPrefix"
@@ -123,7 +123,7 @@ variable "vector_distance_function" {
   validation {
     condition = contains([
       "cosine",
-      "dotproduct", 
+      "dotproduct",
       "euclidean"
     ], var.vector_distance_function)
     error_message = "Distance function must be one of: cosine, dotproduct, euclidean."

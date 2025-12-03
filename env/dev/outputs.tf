@@ -102,25 +102,25 @@ output "eva_environment_config" {
   value = {
     # Basic Configuration
     environment         = var.environment
-    location           = var.location
+    location            = var.location
     resource_group_name = var.resource_group_name
-    
+
     # Authentication & Security
-    key_vault_url = module.key_vault.key_vault_uri
+    key_vault_url              = module.key_vault.key_vault_uri
     managed_identity_client_id = module.key_vault.managed_identity_client_id
-    is_secure_mode = var.is_secure_mode
-    
+    is_secure_mode             = var.is_secure_mode
+
     # Cosmos DB
-    cosmos_endpoint = module.cosmos_db.cosmos_endpoint
+    cosmos_endpoint      = module.cosmos_db.cosmos_endpoint
     cosmos_database_name = module.cosmos_db.database_name
-    cosmos_containers = module.cosmos_db.containers
-    
+    cosmos_containers    = module.cosmos_db.containers
+
     # Monitoring
-    log_analytics_workspace_id = module.monitoring.log_analytics_workspace_id
+    log_analytics_workspace_id             = module.monitoring.log_analytics_workspace_id
     application_insights_connection_string = module.monitoring.application_insights_connection_string
-    
+
     # Networking
-    vnet_id = module.networking.vnet_id
+    vnet_id           = module.networking.vnet_id
     private_subnet_id = module.networking.private_subnet_id
   }
   sensitive = true

@@ -58,9 +58,9 @@ resource "azurerm_cosmosdb_account" "eva_cosmos" {
   }
 
   # Advanced security settings
-  public_network_access_enabled = !var.is_secure_mode
+  public_network_access_enabled         = !var.is_secure_mode
   network_acl_bypass_for_azure_services = true
-  
+
   dynamic "ip_range_filter" {
     for_each = var.allowed_ip_ranges
     content {
@@ -84,7 +84,7 @@ resource "azurerm_cosmosdb_sql_database" "eva_main_db" {
   name                = "eva-platform"
   resource_group_name = var.resource_group_name
   account_name        = azurerm_cosmosdb_account.eva_cosmos.name
-  
+
   # Shared throughput for cost optimization
   dynamic "autoscale_settings" {
     for_each = var.enable_autoscale ? [1] : []
@@ -100,19 +100,19 @@ resource "azurerm_cosmosdb_sql_container" "documents" {
   resource_group_name = var.resource_group_name
   account_name        = azurerm_cosmosdb_account.eva_cosmos.name
   database_name       = azurerm_cosmosdb_sql_database.eva_main_db.name
-  
+
   # Hierarchical Partition Key for tenant isolation
   partition_key_paths = ["/tenantId", "/documentType"]
 
   # Vector indexing policy for AI search
   indexing_policy {
     indexing_mode = "consistent"
-    
+
     # Include paths for efficient queries
     included_path {
       path = "/*"
     }
-    
+
     # Exclude large vectors from automatic indexing
     excluded_path {
       path = "/embedding/*"
@@ -167,13 +167,13 @@ resource "azurerm_cosmosdb_sql_container" "documents" {
     for_each = var.enable_vector_search ? [1] : []
     content {
       vector_embedding {
-        path               = "/content_vector"
+        path              = "/content_vector"
         data_type         = "float32"
         dimensions        = var.vector_dimensions
         distance_function = var.vector_distance_function
       }
       vector_embedding {
-        path               = "/title_vector"
+        path              = "/title_vector"
         data_type         = "float32"
         dimensions        = var.vector_dimensions
         distance_function = var.vector_distance_function
@@ -196,16 +196,16 @@ resource "azurerm_cosmosdb_sql_container" "conversations" {
   resource_group_name = var.resource_group_name
   account_name        = azurerm_cosmosdb_account.eva_cosmos.name
   database_name       = azurerm_cosmosdb_sql_database.eva_main_db.name
-  
+
   partition_key_paths = ["/tenantId", "/userId"]
 
   indexing_policy {
     indexing_mode = "consistent"
-    
+
     included_path {
       path = "/*"
     }
-    
+
     excluded_path {
       path = "/message_vectors/*"
     }
@@ -231,7 +231,7 @@ resource "azurerm_cosmosdb_sql_container" "conversations" {
     for_each = var.enable_vector_search ? [1] : []
     content {
       vector_embedding {
-        path               = "/message_vector"
+        path              = "/message_vector"
         data_type         = "float32"
         dimensions        = var.vector_dimensions
         distance_function = var.vector_distance_function
@@ -253,12 +253,12 @@ resource "azurerm_cosmosdb_sql_container" "user_profiles" {
   resource_group_name = var.resource_group_name
   account_name        = azurerm_cosmosdb_account.eva_cosmos.name
   database_name       = azurerm_cosmosdb_sql_database.eva_main_db.name
-  
+
   partition_key_paths = ["/tenantId"]
 
   indexing_policy {
     indexing_mode = "consistent"
-    
+
     included_path {
       path = "/*"
     }
@@ -290,12 +290,12 @@ resource "azurerm_cosmosdb_sql_container" "analytics" {
   resource_group_name = var.resource_group_name
   account_name        = azurerm_cosmosdb_account.eva_cosmos.name
   database_name       = azurerm_cosmosdb_sql_database.eva_main_db.name
-  
+
   partition_key_paths = ["/tenantId", "/metric_type"]
 
   indexing_policy {
     indexing_mode = "consistent"
-    
+
     included_path {
       path = "/*"
     }
@@ -335,7 +335,7 @@ resource "azapi_resource" "vector_search_index" {
           type = "quantizedFlat"
         },
         {
-          path = "/title_vector"  
+          path = "/title_vector"
           type = "quantizedFlat"
         }
       ]
@@ -379,7 +379,7 @@ resource "azurerm_monitor_diagnostic_setting" "cosmos_diag" {
   enabled_log {
     category = "DataPlaneRequests"
   }
-  
+
   enabled_log {
     category = "MongoRequests"
   }
@@ -398,7 +398,7 @@ resource "azurerm_monitor_diagnostic_setting" "cosmos_diag" {
 
   enabled_log {
     category = "ControlPlaneRequests"
-  }  # Metrics
+  } # Metrics
   metric {
     category = "Requests"
   }
