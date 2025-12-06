@@ -9,7 +9,7 @@ jobs:
   guard:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Block forbidden Terraform files
         shell: bash
@@ -36,7 +36,7 @@ jobs:
   iac-scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Checkov (Terraform)
         uses: bridgecrewio/checkov-action@v12
