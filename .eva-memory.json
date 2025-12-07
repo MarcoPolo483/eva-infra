@@ -2,20 +2,20 @@
   "$schema": "https://marcopolo483.github.io/eva-suite/schemas/eva-memory-v1.json",
   "version": "1.0.0",
   "repo": {
-    "name": "REPO_NAME_PLACEHOLDER",
-    "pod": "POD_PLACEHOLDER",
-    "purpose": "DESCRIPTION_PLACEHOLDER",
+    "name": "eva-infra",
+    "pod": "POD-F",
+    "purpose": "Infrastructure as Code for EVA Suite. Terraform modules for Azure resources: Cosmos DB, Azure AI Search, Azure OpenAI, Blob Storage, Redis Cache, Key Vault, VNet, NSG, private endpoints. Shared infrastructure model ($36/month, 64% cost savings). Testing strategy: syntax → plan → dev → smoke tests → test → production. Reference: PubSec Info Assistant Terraform patterns (896-line main.tf, 20+ modules), AZURE-INFRA-PLAN.md (801-line testing/rollback guide).",
     "status": "active",
-    "owner": "OWNER_PLACEHOLDER",
-    "dependencies": [],
-    "lastUpdated": "2025-11-29T00:00:00Z"
+    "owner": "P04-LIB + DevOps",
+    "dependencies": ["eva-orchestrator (specification)", "Terraform 1.6+", "Azure CLI", "GitHub Actions", "Azure subscription"],
+    "lastUpdated": "2025-12-07T17:25:00Z"
   },
   "context": {
-    "summary": "SUMMARY_PLACEHOLDER",
-    "keyFiles": [],
-    "currentPhase": "Sprint 4 - Stabilization & Demo Prep",
+    "summary": "CRITICAL: BEFORE ANY WORK, read complete specification: docs/SPECIFICATION.md (9800+ lines). Contains ALL infrastructure requirements: 8 Terraform modules (Cosmos DB, AI Search, OpenAI, Blob Storage, Redis, Key Vault, Networking, Monitoring), 6-level testing strategy, smoke test scripts, CI/CD workflows, security patterns (private endpoints, NSG, RBAC), cost optimization (shared infrastructure, $36/month), 12 quality gates (Terraform validation, tfsec security scan, cost estimation, deployment success, smoke tests, state consistency, backup/restore, documentation, secrets management, multi-environment isolation, rollback, monitoring alerts), 4-phase implementation plan (6 weeks: Core Infrastructure → AI Services → Networking/Security → Monitoring/Docs). Reference implementations: PubSec Info Assistant (modules/), AZURE-INFRA-PLAN.md (testing strategy, rollback procedures). Marco is NOT available for questions - specification is complete. Any Terraform work MUST follow specification exactly. Evidence required: terraform apply output, smoke test results, deployed resources verified.",
+    "keyFiles": ["docs/SPECIFICATION.md", "terraform/main.tf", "terraform/modules/", ".github/workflows/terraform-plan.yml", ".github/workflows/terraform-apply.yml", "scripts/smoke-test.sh"],
+    "currentPhase": "BLOCKED: Must read docs/SPECIFICATION.md FIRST before any Terraform provisioning work",
     "openIssues": 0,
-    "blockers": []
+    "blockers": ["CRITICAL: Cannot start provisioning Azure resources without reading complete specification (docs/SPECIFICATION.md). All infrastructure requirements, module structure, testing strategy, CI/CD workflows, security patterns, and 12 quality gates are documented. Read specification before ANY Terraform work."]
   },
   "quality": {
     "testCoverage": 0,
