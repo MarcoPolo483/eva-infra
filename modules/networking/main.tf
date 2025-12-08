@@ -1,5 +1,5 @@
 variable "name_prefix" { type = string }
-variable "location" { type = string }
+variable "location"    { type = string }
 
 resource "azurerm_resource_group" "rg" {
   name     = "${var.name_prefix}-rg-net"
