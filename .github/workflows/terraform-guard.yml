@@ -52,7 +52,7 @@ jobs:
           sarif_file: checkov.sarif
 
       - name: Trivy IaC
-        uses: aquasecurity/trivy-action@0.20.0
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           scan-type: config
           format: sarif
