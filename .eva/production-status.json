@@ -1,6 +1,6 @@
 {
-  "ready": false,
+  "generated_by": "RolloutAgent-Phase3",
   "note": "This file will be overwritten by CI after quality gates pass",
-  "timestamp": "2025-12-16T13:52:43Z",
-  "generated_by": "RolloutAgent-Phase3"
+  "ready": false,
+  "timestamp": "2025-12-16T21:19:40Z"
 }
